@@ -1,0 +1,303 @@
+@charset "utf-8";
+
+/* ---------------------------------------------------------------------------- */
+
+
+/* Author:  liujunhao */
+
+
+/* Email: html.5@foxmail.com  */
+
+
+/* ---------------------------------------------------------------------------- */
+
+body,
+div,
+dl,
+dt,
+dd,
+ul,
+ol,
+li,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+hr,
+pre,
+code,
+form,
+input,
+button,
+fieldset,
+textarea,
+p,
+blockquote,
+th,
+td {
+    margin: 0;
+    padding: 0
+}
+
+table {
+    border-collapse: collapse;
+    border-spacing: 0
+}
+
+fieldset,
+img {
+    border: 0
+}
+
+address,
+caption,
+cite,
+code,
+dfn,
+em,
+strong,
+th,
+var {
+    font-style: normal;
+    font-weight: normal
+}
+
+ol,
+ul {
+    list-style: none
+}
+
+del,
+ins {
+    text-decoration: none
+}
+
+caption,
+th {
+    text-align: left
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-size: 100%;
+    font-weight: normal
+}
+
+input,
+button,
+textarea,
+select {
+    font-size: 100%
+}
+
+q:before,
+q:after {
+    content: ''
+}
+
+addr,
+acronym {
+    border: 0;
+    font-variant: normal
+}
+
+sup,
+sub {
+    vertical-align: baseline
+}
+
+.clearfix:after {
+    content: ".";
+    display: block;
+    height: 0;
+    clear: both;
+    visibility: hidden;
+}
+
+.clearfix {
+    display: inline-block;
+}
+
+* html .clearfix {
+    height: 1%;
+}
+
+.clearfix {
+    display: block;
+}
+
+body {
+    font: 12px/1.5 \5b8b\4f53, sans-serif
+}
+
+.fb {
+    font-weight: 700
+}
+
+.tl {
+    text-align: left
+}
+
+.tc {
+    text-align: center
+}
+
+.tr {
+    text-align: right
+}
+
+.fl {
+    float: left;
+}
+
+.fr {
+    float: right;
+}
+
+.vm {
+    vertical-align: middle;
+}
+
+.pr {
+    position: relative
+}
+
+.pa {
+    position: absolute
+}
+
+.none {
+    display: none
+}
+
+input[type=text],
+textarea {
+    -webkit-transition: all 0.30s ease-in-out;
+    -moz-transition: all 0.30s ease-in-out;
+    -ms-transition: all 0.30s ease-in-out;
+    -o-transition: all 0.30s ease-in-out;
+    outline: none;
+    padding: 3px 0px 3px 3px;
+    margin: 5px 1px 3px 0px;
+    border: 1px solid #ddd;
+}
+
+input[type=text]:focus,
+textarea:focus {
+    box-shadow: 0 0 5px rgba(81, 203, 238, 1);
+    padding: 3px 0px 3px 3px;
+    margin: 5px 1px 3px 0px;
+    border: 1px solid rgba(81, 203, 238, 1);
+}
+
+
+
+
+
+/*DIY*/
+.icon.iconfont {
+    font-size: 25px;
+}
+
+.sImg {
+    display: block;
+    width: 100%;
+}
+
+.sliderContent {
+    position: relative;
+    width: 480px;
+    height: 272px;
+    overflow:hidden;
+    border-radius: 10px;
+}
+.sliderContent .sProgressBar{
+    content:"";
+    position: absolute;
+    height: 2px;
+    background: #f80;
+    left: 0;
+    top: 0;
+    width: 40%;
+}
+
+.slider {
+    position: relative;
+    width: 480px;
+    height: 272px;
+    margin: 200px auto;
+    overflow: hidden;
+    border-radius: 10px;
+    box-shadow: 0 0 20px 4px #ddd;
+    z-index: 10;
+    
+}
+
+.slider .sBtn {
+    position: absolute;
+    width: 50px;
+    height: 40px;
+    line-height: 40px;
+    text-align: center;
+    background: rgba(0, 0, 0, .2);
+    color: #fff;
+    top: 50%;
+    transform: translateY(-50%);
+    transition: all .3s ease-in-out;
+    text-decoration: none;
+    font-weight: bold;
+    display: none;
+}
+
+
+.slider .sBtn:hover {
+    background: rgba(0, 0, 0, .5);
+}
+.sListBtn{
+    position: absolute;
+    z-index: 10;
+    left: 50%;
+    bottom: 10px;
+    transform: translateX(-50%);
+}
+.sListBtn li {
+    width: 12px;
+    height: 12px;
+    display: inline-block;
+    font-size: 0;
+    margin: 0 5px;
+    background: rgba(255, 255, 255, 0.5);
+    border-radius: 100%;
+    transition: all .2s ease-in-out;
+    cursor: pointer;
+}
+.sListBtn li.listCur {
+    background: #fff;
+}
+.sListBtn li:hover {
+    background:#fff;
+}
+
+
+.slider .sBtnL {
+    left: 0;
+}
+
+.slider .sBtnR {
+    right: 0;
+}
+
+.sImgList {
+    overflow: hidden;
+    width: 10000px;
+}
+
+.sImgList li {
+    float: left;
+}
