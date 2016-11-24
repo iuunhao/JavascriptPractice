@@ -1,0 +1,76 @@
+* {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    box-sizing: border-box;
+}
+
+.sTabBox {
+    width: 500px;
+    margin: 100px auto;
+    border-radius: 6px;
+    overflow: hidden;
+}
+
+.sTabBox .sMenuList {
+    display: flex;
+    border-bottom: 1px solid #e8e8e8;
+    font-size: 14px;
+}
+
+.sTabBox .sMenuList li {
+    flex: 1;
+    height: 40px;
+    line-height: 40px;
+    color: #333;
+    text-align: center;
+    background: #efefef;
+}
+
+.sMenuList li:hover,
+.sMenuList li.cur {
+    cursor: pointer;
+    color: #fff;
+    background: #63caef;
+    border-bottom: 1px solid #5bbadc;
+}
+
+.sTabBox .sContentList {
+    background: #f9f9f9;
+    line-height: 1.8;
+    overflow: hidden;
+    font-size: 15px;
+    color: #7b7b7b;
+    text-indent: 2em;
+    height: 330px;
+}
+
+.sTabBox .sContentList li {
+    padding: 0 10px;
+    margin: 20px 15px;
+    height: 290px;
+    display: none;
+    overflow-y: auto;
+    -webkit-transform: translate3d(0, 0, 0);
+    -webkit-overflow-scrolling: touch;
+}
+
+::-webkit-scrollbar {
+    width: 1px;
+    height: 1px;
+}
+
+::-webkit-scrollbar-track {
+    background-color: #e0e0e0;
+    ;
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: #63caef;
+}
+
+.sTabBox .sContentList .cur {
+    display: block;
+}
+
+
