@@ -5,3 +5,5 @@
 [API](https://github.com/iuunhao/JavascriptPractice/tree/gh-pages/API)
 
 [Date Linkage](https://iuunhao.github.io/JavascriptPractice/DateLinkage)
+
+[Tags](https://iuunhao.github.io/JavascriptPractice/tag)
