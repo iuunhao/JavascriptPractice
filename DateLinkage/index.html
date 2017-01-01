@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>日期联动</title>
+    <style type="text/css" media="screen">
+        #setDate {
+            display: flex;
+            width: 50%;
+            margin: 100px auto;
+        }
+
+        .Date,
+        .time {
+            flex: 1;
+            display: flex;
+        }
+
+        .Date {
+            margin-right: 10%;
+        }
+
+        select {
+            height: 50px;
+            font-size: 24px;
+            flex: 1;
+            margin: 0 3%;
+        }
+
+        .sTxt {
+            text-align: center;
+            font-size: 40px;
+            color: #f80;
+            font-weight: 700;
+        }
+
+        .none {
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="a1">
+        <div id="setDate">
+            <div class="Date">
+                <select class="year">
+                    <option value="1">1</option>
+                </select>
+                <select class="month">
+                  <option value="1">1</option>
+                </select>
+                <select class="day">
+                  <option value="1">1</option>
+                </select>
+            </div>
+            <div class="time">
+                <select class="tm" class="none">
+                  <option value="上午">上午</option>
+                  <option value="下午">下午</option>
+                </select>
+                <select class="hours">
+                  <option value="1">1</option>
+                </select>
+                <select class="minutes">
+                  <option value="1">1</option>
+                </select>
+            </div>
+        </div>
+        <p class="sTxt"></p>
+    </div>
+
+
+    <div id="a2">
+        <div id="setDate">
+            <div class="Date">
+                <select class="year">
+                    <option value="1">1</option>
+                </select>
+                <select class="month">
+                    <option value="1">1</option>
+                </select>
+                <select class="day">
+                    <option value="1">1</option>
+                </select>
+            </div>
+            <div class="time">
+                <select class="tm" class="none">
+                     <option value="上午">上午</option>
+                <option value="下午">下午</option>
+                </select>
+                <select class="hours">
+                    <option value="1">1</option>
+                </select>
+                <select class="minutes">
+                    <option value="1">1</option>
+                </select>
+            </div>
+        </div>
+        <p class="sTxt"></p>
+    </div>
+    <script>
+        (function(log) {
+            var setDate = function(ops) {
+                //无new调用
+                if (!(this instanceof setDate)) {
+                    return new setDate(ops);
+                } else {
+                    this.ops = ops || {};
+                }
+
+                this.yearNumber = -1; //根作用域年份
+                this.monthNumber = -1; //根作用域月份
+                this.dayNumber = -1; //根作用域日
+                this.daysNumber = -1; //根作用域某月有多少天
+                this.hoursNumber = -1; //根作用域小时
+                this.minutesNumber = -1; //根作用域分钟
+
+                this.yearMaxlen = this.ops.yearMaxlen || 10; //根作用域年份区间
+                this.hasBeforAfter = this.ops.hasBeforAfter || false; //根作用域年份是否从当前年往后推算
+                this.has24 = this.ops.has24 || false; //是否开启24小时日制
+                this.isZero = this.ops.isZero || true; //是否补零
+
+                //初始化执行
+                this.init();
+            };
+
+            setDate.prototype = {
+                constructor: setDate,
+                //元素选择
+                els: function() {
+                    this.id = document.querySelector(this.ops.id || '#setDate'); //获取根元素
+                    this.year = this.id.querySelector(this.ops.year || '.year'); //获取年份select
+                    this.month = this.id.querySelector(this.ops.month || '.month'); //获取月份select
+                    this.day = this.id.querySelector(this.ops.day || '.day'); //获取日select
+                    this.tm = this.id.querySelector(this.ops.tm || '.tm'); //获取上午下午select
+                    this.hours = this.id.querySelector(this.ops.hours || '.hours'); //获取小时select
+                    this.minutes = this.id.querySelector(this.ops.minutes || '.minutes'); //获取分钟select
+                },
+                //初始化函数
+                init: function() {
+                    //元素获取执行
+                    this.els();
+
+                    this.s24Num = 0;
+
+                    //初始化数据
+                    this.initDateFn();
+
+                    //事件监听
+                    this.handleFn();
+
+
+                },
+                //初始化数据函数
+                initDateFn: function() {
+                    //获取初次显示数据
+                    this.setYearFn();
+                    this.setMonthFn();
+                    this.setDayFn();
+
+                    //获取初次显示数据
+                    this.setHoursFn();
+                    this.setMinutesFn();
+
+                    if (new Date().getHours() > 12) {
+                        this.tm.value = "下午";
+                    }
+
+                    this.sTmFn();
+
+                    //设置首次显示为当前日期
+                    this.year.value = this.yearNumber;
+                    this.month.value = this.zeroFn(this.monthNumber);
+                    this.day.value = this.zeroFn(this.dayNumber);
+                    this.hours.value = this.zeroFn(this.hoursNumber);
+                    this.minutes.value = this.zeroFn(this.minutesNumber);
+                },
+
+                //事件监听函数
+                handleFn: function() {
+                    var _this = this;
+
+                    //年份select input监听
+                    this.year.addEventListener('input', function() {
+                        _this.yearNumber = this.value;
+                        _this.setDayFn();
+                    }, false);
+
+                    //月份select input监听
+                    this.month.addEventListener('input', function() {
+                        _this.monthNumber = this.value;
+                        _this.setDayFn();
+                    }, false);
+
+                    // 日select input监听
+                    this.day.addEventListener('input', function() {
+                        _this.dayNumber = this.value;
+                        _this.codingDateFn();
+                    }, false);
+
+                    // 小时select input监听
+                    this.hours.addEventListener('input', function() {
+                        _this.hoursNumber = this.value;
+                        _this.codingDateFn();
+                    }, false);
+
+                    // 分钟select input监听
+                    this.minutes.addEventListener('input', function() {
+                        _this.minutesNumber = this.value;
+                        _this.codingDateFn();
+                    }, false);
+
+
+                    //上下午事件监听
+                    this.tm.addEventListener('input', function() {
+                        _this.sTmFn();
+
+                    }, false);
+
+
+                },
+
+                //设置年份
+                setYearFn: function() {
+                    //年份空数组
+                    var _yearArr = [],
+                        //当前年份
+                        _currentYear = new Date().getFullYear(),
+                        _this = this;
+                    //清空select选项
+                    this.year.options.length = 0;
+                    //设置根根作用域当前年份
+                    this.yearNumber = _currentYear;
+
+                    //判断是否是根据当前年份往后推算
+                    if (this.hasBeforAfter) {
+                        //如果是根据设置年份区间求去中间值
+                        _currentYear = _currentYear - parseInt((this.yearMaxlen - 1) / 2);
+                    }
+
+                    //根据年份区间长度计算年份选项
+                    while (_yearArr.length <= (this.yearMaxlen - 1)) {
+                        _yearArr.push(_currentYear++);
+                    }
+
+                    //设置年份select内容
+                    _yearArr.forEach(function(item, index) {
+                        _this.year.add(new Option(item, item));
+                    });
+                },
+
+                //设置月份
+                setMonthFn: function() {
+                    this.monthNumber = new Date().getMonth() + 1;
+
+                    this.pubForFn({
+                        num: 12,
+                        el: this.month
+                    });
+                },
+
+                //设置日期
+                setDayFn: function() {
+                    this.getDaysFn();
+                    this.dayNumber = new Date().getDate();
+
+                    this.pubForFn({
+                        num: this.daysNumber,
+                        el: this.day
+                    });
+
+                    //调用编码日期格式
+                    this.codingDateFn();
+                },
+
+                //获取某月天数
+                getDaysFn: function(y, m) {
+                    //获取某月共有多少天
+                    var _currentMonthDays = new Date(this.yearNumber, this.monthNumber, 0).getDate();
+                    //设置根作用域某月天数
+                    this.daysNumber = _currentMonthDays;
+                },
+
+                //区分上下午
+                sTmFn: function() {
+                    if (!this.has24) {
+                        if (this.tm.value === '上午') this.s24Num = 0;
+                        else this.s24Num = 12;
+                    }
+
+                    this.codingDateFn();
+                },
+
+                //设置小时
+                setHoursFn: function() {
+                    this.hoursNumber = new Date().getHours();
+
+                    var _num = 23;
+
+                    if (!this.has24) {
+                        _num = 12;
+                        this.tm.classList.remove('none');
+                        this.hoursNumber = this.hoursNumber - 12;
+                    } else {
+                        this.tm.classList.add('none');
+                    }
+
+                    this.pubForFn({
+                        num: _num,
+                        el: this.hours
+                    });
+
+                    this.codingDateFn();
+                    this.sTmFn();
+                },
+
+                //设置分钟
+                setMinutesFn: function() {
+                    this.minutesNumber = new Date().getMinutes();
+
+                    this.pubForFn({
+                        num: 59,
+                        el: this.minutes
+                    });
+
+                    this.codingDateFn();
+                    this.sTmFn();
+                },
+
+                //公共循环
+                pubForFn: function(obj) {
+                    var _arr = obj.arr || [],
+                        _len = _arr.length + 1,
+                        _this = this;
+
+                    if (obj.el === this.hours && this.has24) _len = 0;
+                    if (obj.el === this.minutes) _len = 0;
+
+                    obj.el.options.length = 0;
+
+                    while (_len <= obj.num) {
+                        _arr.push(_len++);
+                    }
+
+                    _arr.forEach(function(item) {
+                        item = _this.zeroFn(item);
+                        obj.el.add(new Option(item, item));
+                    });
+                },
+
+                zeroFn: function(str) {
+                    if (str < 10 && this.isZero) {
+                        return '0' + str;
+                    }
+                    return str;
+                },
+
+                //编码日期
+                codingDateFn: function() {
+                    var _y = this.yearNumber,
+                        _m = this.monthNumber,
+                        _d = this.dayNumber,
+                        _h = parseInt(this.hoursNumber),
+                        _min = parseInt(this.minutesNumber);
+
+                    _h = this.zeroFn(_h + this.s24Num);
+                    if (_h === 24) _h = '00';
+
+                    this.id.querySelector('.sTxt').innerHTML = _y + '-' + _m + '-' + _d + ' ' + _h + ':' + _min;
+                    return (_y + '-' + _m + '-' + _d + ' ' + _h + ':' + _min);
+                },
+
+            };
+
+
+
+
+
+            setDate({
+                id: '#a1',
+                year: '.year',
+                month: '.month',
+                day: '.day',
+                tm: '.tm',
+                hours: '.hours',
+                minutes: '.minutes',
+                has24: true,
+                isZero: true,
+                yearMaxlen: 10,
+            });
+
+            setDate({
+                id: '#a2',
+                has24: false,
+                isZero: true,
+                yearMaxlen: 20,
+                hasBeforAfter: "true"
+            });
+
+        }(window.console.log));
+    </script>
+</body>
+
+</html>
