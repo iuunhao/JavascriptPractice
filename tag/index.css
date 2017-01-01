@@ -1,0 +1,116 @@
+.labelRoot {
+    margin: 10px;
+    background-color: #f8f8f8;
+    padding: 20px;
+    border-radius: 4px;
+}
+
+.sSpanTxt {
+    font-style: normal;
+}
+
+.labelRoot .sLabelMain {
+    border: 1px solid #d7d7d7;
+    padding: 10px;
+    border-radius: 4px;
+    background: #fff;
+}
+
+.labelRoot .sLabelMain .sInput {
+    height: 30px;
+    line-height: 30px;
+    color: #333;
+    font-size: 14px;
+    margin: 10px 5px;
+    padding: 0 10px;
+    outline: 0;
+    color: #999;
+    border: 0;
+}
+
+.sLabelMain .sSpan {
+    position: relative;
+    display: inline-block;
+    background-color: #f80;
+    height: 30px;
+    line-height: 30px;
+    color: #fff;
+    font-size: 18px;
+    padding: 0 10px;
+    margin: 10px 5px;
+    border-radius: 4px;
+}
+
+.sLabelMain .sClose {
+    position: absolute;
+    top: -5px;
+    right: -5px;
+    background: rgba(0, 0, 0, 0);
+    padding: 10px 20px;
+}
+
+.sLabelMain .sClose:after {
+    position: absolute;
+    top: 0;
+    right: 0;
+    z-index: 10;
+    content: '×';
+    background: #777;
+    height: 15px;
+    width: 15px;
+    text-align: center;
+    border-radius: 100%;
+    line-height: 15px;
+    color: #fff;
+    font-size: 12px;
+    text-decoration: none;
+}
+
+.sLabelMain .sClose:hover:after {
+    background: #f00;
+    cursor: pointer;
+}
+
+.labelRoot .sDesc {
+    color: #888;
+    font-size: 12px;
+    margin: 10px 0;
+    display: flex;
+    justify-content: space-between;
+}
+
+.labelRoot .sDesc .sTxt {
+    color: red;
+    font-size: 12px;
+}
+
+.labelRoot .sDesc .sTxt:before {
+    content: '*';
+}
+
+.labelRoot .sNumber {
+    color: #444;
+    font-style: normal;
+    font-weight: bold;
+    margin: 0 4px;
+}
+
+.labelRoot .sCurNub {
+    color: #f80;
+}
+
+.labelRoot .sSubmitBtn {
+    display: block;
+    margin: 20px 0;
+    text-align: center;
+    text-decoration: none;
+    background: #f80;
+    padding: 10px 0;
+    font-size: 18px;
+    color: #fff;
+    border-radius: 4px;
+}
+
+.none {
+    display: none;
+}
