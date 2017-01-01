@@ -4,4 +4,4 @@
 
 [API](https://github.com/iuunhao/JavascriptPractice/tree/gh-pages/API)
 
-[Date Linkage](https://github.com/iuunhao/JavascriptPractice/tree/gh-pages/DateLinkage/)
+[Date Linkage](https://iuunhao.github.io/JavascriptPractice/Toggles/DateLinkage)
